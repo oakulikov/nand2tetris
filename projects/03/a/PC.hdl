@@ -17,4 +17,22 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+    Or(a=reset, b=load, out=l1);
+    Or(a=inc, b=l1, out=l2);
+    Register(in=in1, load=l2, out=o1);
+    Inc16(in=o1, out=oinc);
+    Mux16(a=oinc, b=in, sel=load, out=o2);
+    Or(a=load, b=inc, out=il);
+    And16(a=o2, b[0]=il, b[1]=il, b[2]=il, b[3]=il, b[4]=il, 
+                b[5]=il, b[6]=il, b[7]=il, b[8]=il, b[9]=il, 
+                b[10]=il, b[11]=il, b[12]=il, b[13]=il, b[14]=il,
+                b[15]=il, out=o3);
+    Not(in=reset, out=notreset);
+    And16(a=o3, b[0]=notreset, b[1]=notreset, b[2]=notreset,
+                b[3]=notreset, b[4]=notreset, b[5]=notreset,
+                b[6]=notreset, b[7]=notreset, b[8]=notreset,
+                b[9]=notreset, b[10]=notreset, b[11]=notreset,
+                b[12]=notreset, b[13]=notreset, b[14]=notreset,
+                b[15]=notreset, out=in1);
+    And16(a=o1, b=true, out=out);
 }
